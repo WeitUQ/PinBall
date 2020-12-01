@@ -1,0 +1,48 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class FlipperController : MonoBehaviour
+{
+    private HingeJoint myHingeJoint;
+    private float defaultangle = 20;
+    private float flickangle = -20;
+    // Start is called before the first frame update
+    void Start()
+    {
+        this.myHingeJoint = GetComponent<HingeJoint>();
+        SetAngle(this.defaultangle);
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.LeftArrow) && tag == "LeftFlipperTag")
+        {
+            SetAngle(this.flickangle);
+
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow) && tag == "RightFlipperTag")
+        {
+            SetAngle(this.flickangle);
+        }
+        if(Input.GetKeyUp(KeyCode.LeftArrow) && tag == "LeftFlipperTag")
+        {
+            SetAngle(this.defaultangle);
+        }
+        if(Input.GetKeyUp(KeyCode.RightArrow) && tag == "RightFlipperTag")
+        {
+            SetAngle(this.defaultangle);
+        }
+    }
+
+    public void SetAngle(float angle)
+    {
+        JointSpring jointSpr = this.myHingeJoint.spring;
+        jointSpr.targetPosition = angle;
+        myHingeJoint.spring = jointSpr;
+
+    }
+
+}
